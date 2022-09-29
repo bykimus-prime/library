@@ -27,6 +27,13 @@ function addBookToLibrary(title, author, pages, read) {
 function displayBooks() {
    const books = document.querySelector('.books');
 
+   // remove previously displayed cards that were popping up before looping array again
+   const removeDivs = document.querySelectorAll('.card');
+   console.log('show node count of current card divs', removeDivs);
+   for (let i = 0; i < removeDivs.length; i++) {
+      removeDivs[i].remove();
+   }
+
    // loop over library array and display to cards
    myLibrary.forEach(myLibrary => {
       const card = document.createElement('div');
