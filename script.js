@@ -29,7 +29,7 @@ function displayBooks() {
 
    // remove previously displayed cards that were popping up before looping array again
    const removeDivs = document.querySelectorAll('.card');
-   console.log('show node count of current card divs', removeDivs);
+   console.log('show node count of current card divs', removeDivs); // removeDivs could be used as a book counter later
    for (let i = 0; i < removeDivs.length; i++) {
       removeDivs[i].remove();
    }
@@ -62,6 +62,9 @@ function intakeFormData() {
 
    // call function to input book data to array
    addBookToLibrary(title, author, pages, read);
+
+   // reset form after submission
+   document.getElementById('addBook').reset();
 }
 
 function clearForm() {
