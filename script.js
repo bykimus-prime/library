@@ -60,6 +60,11 @@ function intakeFormData() {
    let pages = document.getElementById('pages').value;
    let read = document.getElementById('read').value;
 
+   // break out of form if incomplete
+   if ((title == '') || (author == '') || (pages == '') || (read == '')) {
+      return;
+   }
+
    // call function to input book data to array
    addBookToLibrary(title, author, pages, read);
 
