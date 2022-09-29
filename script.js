@@ -20,6 +20,7 @@ function Book(title, author, pages, read) {
 function addBookToLibrary(title, author, pages, read) {
    let book = new Book(title, author, pages, read);
    myLibrary.push(book);
+   displayBooks();
 }
 
 // displays library array to cards
@@ -40,8 +41,21 @@ function displayBooks() {
    })
 }
 
+const addBook = document.querySelector('.add-to-lib-btn');
 const clearBtn = document.querySelector('.reset-btn');
+
+addBook.addEventListener('click', intakeFormData);
 clearBtn.addEventListener('click', clearForm);
+
+function intakeFormData() {
+   let title = document.getElementById('title').value; // .value will pull the contents of textbox
+   let author = document.getElementById('author').value;
+   let pages = document.getElementById('pages').value;
+   let read = document.getElementById('read').value;
+
+   // call function to input book data to array
+   addBookToLibrary(title, author, pages, read);
+}
 
 function clearForm() {
    document.getElementById('addBook').reset();
