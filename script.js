@@ -40,14 +40,21 @@ function displayBooks() {
    })
 }
 
+const clearBtn = document.querySelector('.reset-btn');
+clearBtn.addEventListener('click', clearForm);
+
+function clearForm() {
+   document.getElementById('addBook').reset();
+}
+
 // calling function and add data manually until we add user input
-addBookToLibrary('The Hobbit', 'by J.R.R. Tolkien', '297 pages', 'not read');
-addBookToLibrary('Green Eggs and Ham', 'by Dr. Seuss', '62 pages', 'read');
-addBookToLibrary('The Hobbit', 'by J.R.R. Tolkien', '297 pages', 'not read');
-addBookToLibrary('Green Eggs and Ham', 'by Dr. Seuss', '62 pages', 'read');
-addBookToLibrary('The Hobbit', 'by J.R.R. Tolkien', '297 pages', 'not read');
-addBookToLibrary('Green Eggs and Ham', 'by Dr. Seuss', '62 pages', 'read');
+// addBookToLibrary('The Hobbit', 'by J.R.R. Tolkien', '297 pages', 'not read');
+// addBookToLibrary('Green Eggs and Ham', 'by Dr. Seuss', '62 pages', 'read');
+// addBookToLibrary('The Hobbit', 'by J.R.R. Tolkien', '297 pages', 'not read');
+// addBookToLibrary('Green Eggs and Ham', 'by Dr. Seuss', '62 pages', 'read');
+// addBookToLibrary('The Hobbit', 'by J.R.R. Tolkien', '297 pages', 'not read');
+// addBookToLibrary('Green Eggs and Ham', 'by Dr. Seuss', '62 pages', 'read');
 
-console.log('end of code array contents', myLibrary);
+// console.log('end of code array contents', myLibrary);
 
-displayBooks();
+// displayBooks();
