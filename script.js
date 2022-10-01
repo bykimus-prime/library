@@ -7,14 +7,7 @@ function Book(title, author, pages, read) {
    this.author = author;
    this.pages = pages;
    this.read = read;
-   // this.info = function() {
-   //    return (title + author + ', ' + pages + read)
-   // }
 }
-
-// const theHobbit = new Book('The Hobbit', 'by J.R.R. Tolkien', '297 pages', 'not read')
-// console.log(theHobbit.info());
-
 
 // adds new books to array
 function addBookToLibrary(title, author, pages, read) {
@@ -28,21 +21,41 @@ function displayBooks() {
    const books = document.querySelector('.books');
 
    // remove previously displayed cards that were popping up before looping array again
-   const removeDivs = document.querySelectorAll('.card');
-   console.log('show node count of current card divs', removeDivs); // removeDivs could be used as a book counter later
+   const removeDivs = document.querySelectorAll('.card'); // removeDivs could be used as a book counter later
    for (let i = 0; i < removeDivs.length; i++) {
       removeDivs[i].remove();
    }
 
    // loop over library array and display to cards
-   myLibrary.forEach(myLibrary => {
+   let index = 0;
+   myLibrary.forEach(myLibraries => {
       const card = document.createElement('div');
       card.classList.add('card')
       books.appendChild(card);
-      for (let key in myLibrary) {
-         console.log(`${key}: ${myLibrary[key]}`)
+
+      // create remove button and add class attribute for each array card
+      const rmvBookBtn = document.createElement('button');
+      rmvBookBtn.classList.add('remove-book-btn');
+      rmvBookBtn.textContent = 'Remove From Library';
+
+      // link data attribute to remove button to the array and card
+      rmvBookBtn.dataset.linkedArray = index;
+      index++;
+      card.appendChild(rmvBookBtn);
+
+      // start event listener/remove array item from array and card from parent via data link
+      rmvBookBtn.addEventListener('click', removeBookFromLibrary);
+
+      function removeBookFromLibrary() {
+         let getBookToRemove = rmvBookBtn.dataset.linkedArray;
+         myLibrary.splice(parseInt(getBookToRemove), 1);
+         card.remove();
+         displayBooks();
+      }
+
+      for (let key in myLibraries) {
          const para = document.createElement('p');
-         para.textContent = (`${key}: ${myLibrary[key]}`);
+         para.textContent = (`${key}: ${myLibraries[key]}`);
          card.appendChild(para);
       }
    })
@@ -62,6 +75,7 @@ function intakeFormData() {
 
    // break out of form if incomplete
    if ((title == '') || (author == '') || (pages == '') || (read == '')) {
+      // put alert here "please fill in all fields"
       return;
    }
 
@@ -75,15 +89,3 @@ function intakeFormData() {
 function clearForm() {
    document.getElementById('addBook').reset();
 }
-
-// calling function and add data manually until we add user input
-// addBookToLibrary('The Hobbit', 'by J.R.R. Tolkien', '297 pages', 'not read');
-// addBookToLibrary('Green Eggs and Ham', 'by Dr. Seuss', '62 pages', 'read');
-// addBookToLibrary('The Hobbit', 'by J.R.R. Tolkien', '297 pages', 'not read');
-// addBookToLibrary('Green Eggs and Ham', 'by Dr. Seuss', '62 pages', 'read');
-// addBookToLibrary('The Hobbit', 'by J.R.R. Tolkien', '297 pages', 'not read');
-// addBookToLibrary('Green Eggs and Ham', 'by Dr. Seuss', '62 pages', 'read');
-
-// console.log('end of code array contents', myLibrary);
-
-// displayBooks();
