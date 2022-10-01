@@ -11,14 +11,14 @@ function Book(title, author, pages, read) {
 
 // adds new books to array
 function addBookToLibrary(title, author, pages, read) {
-   let book = new Book(title, author, pages, read);
-   myLibrary.push(book);
+   let newBook = new Book(title, author, pages, read);
+   myLibrary.push(newBook);
    displayBooks();
 }
 
 // displays library array to cards
 function displayBooks() {
-   const books = document.querySelector('.books');
+   const booksGrid = document.querySelector('.booksGrid');
 
    // remove previously displayed cards that were popping up before looping array again
    const removeDivs = document.querySelectorAll('.card'); // removeDivs could be used as a book counter later
@@ -31,7 +31,7 @@ function displayBooks() {
    myLibrary.forEach(myLibraries => {
       const card = document.createElement('div');
       card.classList.add('card')
-      books.appendChild(card);
+      booksGrid.appendChild(card);
 
       // create remove button and add class attribute for each array card
       const rmvBookBtn = document.createElement('button');
@@ -48,7 +48,7 @@ function displayBooks() {
 
       function removeBookFromLibrary() {
          let getBookToRemove = rmvBookBtn.dataset.linkedArray;
-         myLibrary.splice(parseInt(getBookToRemove), 1);
+         myLibrary.splice(parseInt(getBookToRemove), 1); // splice takes what you want removed from array, integer value (1) to remove
          card.remove();
          displayBooks();
       }
