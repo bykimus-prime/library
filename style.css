@@ -40,4 +40,9 @@
    text-align: center;
    height: 300px;
    display: grid;
+   justify-content: center;
+}
+
+.remove-book-btn {
+   grid-row: 5 / 6;
 }
