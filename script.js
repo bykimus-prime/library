@@ -9,6 +9,49 @@ function Book(title, author, pages, read) {
    this.read = read;
 }
 
+const addBook = document.querySelector('.add-to-lib-btn');
+const clearBtn = document.querySelector('.reset-btn');
+const addNewBookBtn = document.querySelector('.add-new-book-btn');
+const addBookModal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+
+addBook.addEventListener('click', intakeFormData);
+clearBtn.addEventListener('click', clearForm);
+
+function intakeFormData() {
+   let title = document.getElementById('title').value; // .value will pull the contents of textbox
+   let author = document.getElementById('author').value;
+   let pages = document.getElementById('pages').value;
+   let read = document.getElementById('read').value;
+
+   // break out of form if incomplete
+   if ((title == '') || (author == '') || (pages == '')) {
+      return;
+   }
+
+   // call function to input book data to array
+   addBookToLibrary(title, author, pages, read);
+
+   // reset form after submission and exit modal
+   closeAddBookModal();
+   document.getElementById('addBook').reset();
+}
+
+function clearForm() {
+   document.getElementById('addBook').reset();
+}
+
+const openAddBookModal = () => {
+   document.getElementById('addBook').reset();
+   addBookModal.classList.add('active');
+   overlay.classList.add('active');
+}
+
+const closeAddBookModal = () => {
+   addBookModal.classList.remove('active');
+   overlay.classList.remove('active');
+}
+
 // adds new books to array
 function addBookToLibrary(title, author, pages, read) {
    let newBook = new Book(title, author, pages, read);
@@ -89,40 +132,7 @@ function displayBooks() {
    })
 }
 
-const addBook = document.querySelector('.add-to-lib-btn');
-const clearBtn = document.querySelector('.reset-btn');
-const addBookModal = document.querySelector('.modal');
-
-addBook.addEventListener('click', intakeFormData);
-clearBtn.addEventListener('click', clearForm);
-
-const openAddBookModal = () => {
-   document.getElementById('addBook').reset();
-   addBookModal.classList.add('active');
-   overlay.classList.add('active');
-}
-
-function intakeFormData() {
-   let title = document.getElementById('title').value; // .value will pull the contents of textbox
-   let author = document.getElementById('author').value;
-   let pages = document.getElementById('pages').value;
-   let read = document.getElementById('read').value;
-
-   // break out of form if incomplete
-   if ((title == '') || (author == '') || (pages == '') || (read == '')) {
-      // put alert here "please fill in all fields"
-      return;
-   }
-
-   // call function to input book data to array
-   addBookToLibrary(title, author, pages, read);
-
-   // reset form after submission
-   document.getElementById('addBook').reset();
-}
-
-function clearForm() {
-   document.getElementById('addBook').reset();
-}
+addNewBookBtn.onclick = openAddBookModal;
+overlay.onclick = closeAddBookModal;
 
 addBookToLibrary('the hobb', 'jrr tolk', '200 pgs', 'yes');
