@@ -40,7 +40,6 @@ function displayBooks() {
 
       // link data attribute to remove button to the array and card
       rmvBookBtn.dataset.linkedArray = index;
-      index++;
       card.appendChild(rmvBookBtn);
 
       // start event listener/remove array item from array and card from parent via data link
@@ -53,11 +52,40 @@ function displayBooks() {
          displayBooks();
       }
 
+      // create read status button and class attribute for each array card
+      const isReadBtn = document.createElement('button');
+      isReadBtn.classList.add('is-read-btn');
+      isReadBtn.textContent = 'Read Status';
+      
+      // link data attribute of toggle read button to array and card
+      isReadBtn.dataset.linkedArray = index;
+      card.appendChild(isReadBtn);
+
+      // create event listener for array objects prototype for read status change
+      isReadBtn.addEventListener('click', isReadToggle);
+
+      function isReadToggle() {
+         let getBookToggle = isReadBtn.dataset.linkedArray;
+         Book.prototype = Object.create(Book.prototype);
+         const bookToggle = new Book();
+
+         if ((myLibrary[parseInt(getBookToggle)].read) == 'yes') {
+            bookToggle.read = 'no';
+            myLibrary[parseInt(getBookToggle)].read = bookToggle.read;
+         } else if ((myLibrary[parseInt(getBookToggle)].read == 'no')) {
+            bookToggle.read = 'yes';
+            myLibrary[parseInt(getBookToggle)].read = bookToggle.read;
+         }
+         displayBooks();
+      }
+
       for (let key in myLibraries) {
          const para = document.createElement('p');
          para.textContent = (`${key}: ${myLibraries[key]}`);
          card.appendChild(para);
       }
+
+   index++;
    })
 }
 
@@ -89,3 +117,5 @@ function intakeFormData() {
 function clearForm() {
    document.getElementById('addBook').reset();
 }
+
+addBookToLibrary('the hobb', 'jrr tolk', '200 pgs', 'yes');
