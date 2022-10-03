@@ -80,36 +80,28 @@ function displayBooks() {
       card.classList.add('card')
       booksGrid.appendChild(card);
 
-      // create remove button and add class attribute for each array card
       const rmvBookBtn = document.createElement('button');
+      const isReadBtn = document.createElement('button');
       rmvBookBtn.classList.add('remove-book-btn');
+      isReadBtn.classList.add('is-read-btn');
       rmvBookBtn.textContent = 'Remove From Library';
+      isReadBtn.textContent = 'Read Status';
 
-      // link data attribute to remove button to the array and card
+      // link data attribute to each button to the array and card
       rmvBookBtn.dataset.linkedArray = index;
+      isReadBtn.dataset.linkedArray = index;
       card.appendChild(rmvBookBtn);
+      card.appendChild(isReadBtn);
 
-      // start event listener/remove array item from array and card from parent via data link
       rmvBookBtn.addEventListener('click', removeBookFromLibrary);
+      isReadBtn.addEventListener('click', isReadToggle);
 
       function removeBookFromLibrary() {
          let getBookToRemove = rmvBookBtn.dataset.linkedArray;
-         myLibrary.splice(parseInt(getBookToRemove), 1); // splice takes what you want removed from array, integer value (1) to remove
+         myLibrary.splice(parseInt(getBookToRemove), 1);
          card.remove();
          displayBooks();
       }
-
-      // create read status button and class attribute for each array card
-      const isReadBtn = document.createElement('button');
-      isReadBtn.classList.add('is-read-btn');
-      isReadBtn.textContent = 'Read Status';
-      
-      // link data attribute of toggle read button to array and card
-      isReadBtn.dataset.linkedArray = index;
-      card.appendChild(isReadBtn);
-
-      // create event listener for array objects prototype for read status change
-      isReadBtn.addEventListener('click', isReadToggle);
 
       function isReadToggle() {
          let getBookToggle = isReadBtn.dataset.linkedArray;
