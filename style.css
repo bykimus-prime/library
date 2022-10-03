@@ -14,13 +14,19 @@
    background-color: lightsalmon
 }
 
+/* header */
+
 .book-heading {
    background-color: azure;
 }
 
+/* form */
+
 .form {
    background-color: azure;
 }
+
+/* book cards */
 
 .booksGrid {
    display: grid;
@@ -44,8 +50,14 @@
 }
 
 .remove-book-btn {
+   grid-row: 6 / 7;
+}
+
+.is-read-btn {
    grid-row: 5 / 6;
 }
+
+/* modals */
 
 .modal {
    position: fixed;

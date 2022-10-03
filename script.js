@@ -9,14 +9,28 @@ function Book(title, author, pages, read) {
    this.read = read;
 }
 
-const addBook = document.querySelector('.add-to-lib-btn');
+const addBookBtn = document.querySelector('.add-to-lib-btn');
 const resetBtn = document.querySelector('.reset-btn');
 const addNewBookBtn = document.querySelector('.add-new-book-btn');
 const addBookModal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 
-addBook.addEventListener('click', intakeFormData);
+addBookBtn.addEventListener('click', intakeFormData);
 resetBtn.addEventListener('click', resetForm);
+
+function resetForm() {
+   document.getElementById('addBookForm').reset();
+}
+
+const openAddBookModal = () => {
+   addBookModal.classList.add('active');
+   overlay.classList.add('active');
+}
+
+const closeAddBookModal = () => {
+   addBookModal.classList.remove('active');
+   overlay.classList.remove('active');
+}
 
 function intakeFormData() {
    let title = document.getElementById('title').value; // .value will pull the contents of textbox
@@ -28,28 +42,12 @@ function intakeFormData() {
    if ((title == '') || (author == '') || (pages == '')) {
       return;
    }
-
+   
    // call function to input book data to array
    addBookToLibrary(title, author, pages, read);
 
-   // reset form after submission and exit modal
    closeAddBookModal();
-   document.getElementById('addBook').reset();
-}
-
-function resetForm() {
-   document.getElementById('addBook').reset();
-}
-
-const openAddBookModal = () => {
-   document.getElementById('addBook').reset();
-   addBookModal.classList.add('active');
-   overlay.classList.add('active');
-}
-
-const closeAddBookModal = () => {
-   addBookModal.classList.remove('active');
-   overlay.classList.remove('active');
+   resetForm();
 }
 
 // adds new books to array
