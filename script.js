@@ -91,9 +91,16 @@ function displayBooks() {
 
 const addBook = document.querySelector('.add-to-lib-btn');
 const clearBtn = document.querySelector('.reset-btn');
+const addBookModal = document.querySelector('.modal');
 
 addBook.addEventListener('click', intakeFormData);
 clearBtn.addEventListener('click', clearForm);
+
+const openAddBookModal = () => {
+   document.getElementById('addBook').reset();
+   addBookModal.classList.add('active');
+   overlay.classList.add('active');
+}
 
 function intakeFormData() {
    let title = document.getElementById('title').value; // .value will pull the contents of textbox
