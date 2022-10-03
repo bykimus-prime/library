@@ -139,4 +139,4 @@ function displayBooks() {
 addNewBookBtn.onclick = openAddBookModal;
 overlay.onclick = closeAddBookModal;
 
-addBookToLibrary('the hobb', 'jrr tolk', '200 pgs', 'yes');
+addBookToLibrary('the hobb', 'jrr tolk', '200', 'yes');
