@@ -59,6 +59,10 @@ function addBookToLibrary(title, author, pages, read) {
    displayBooks();
 }
 
+function capitalizeFirstLetter(string) {
+   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 // displays library array to cards
 function displayBooks() {
    const booksGrid = document.querySelector('.booksGrid');
@@ -124,7 +128,7 @@ function displayBooks() {
 
       for (let key in myLibraries) {
          const para = document.createElement('p');
-         para.textContent = (`${key}: ${myLibraries[key]}`);
+         para.textContent = capitalizeFirstLetter((`${key}: ${myLibraries[key]}`));
          card.appendChild(para);
       }
 
