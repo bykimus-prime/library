@@ -10,13 +10,13 @@ function Book(title, author, pages, read) {
 }
 
 const addBook = document.querySelector('.add-to-lib-btn');
-const clearBtn = document.querySelector('.reset-btn');
+const resetBtn = document.querySelector('.reset-btn');
 const addNewBookBtn = document.querySelector('.add-new-book-btn');
 const addBookModal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 
 addBook.addEventListener('click', intakeFormData);
-clearBtn.addEventListener('click', clearForm);
+resetBtn.addEventListener('click', resetForm);
 
 function intakeFormData() {
    let title = document.getElementById('title').value; // .value will pull the contents of textbox
@@ -37,7 +37,7 @@ function intakeFormData() {
    document.getElementById('addBook').reset();
 }
 
-function clearForm() {
+function resetForm() {
    document.getElementById('addBook').reset();
 }
 
