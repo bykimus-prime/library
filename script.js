@@ -17,10 +17,6 @@ const updateBookCounter = document.querySelector('.book-counter');
 
 addBookBtn.addEventListener('click', intakeFormData);
 
-function resetForm() {
-   document.getElementById('addBookForm').reset();
-}
-
 const openAddBookModal = () => {
    addBookModal.classList.add('active');
    overlay.classList.add('active');
@@ -29,7 +25,6 @@ const openAddBookModal = () => {
 const closeAddBookModal = () => {
    addBookModal.classList.remove('active');
    overlay.classList.remove('active');
-   resetForm();
 }
 
 function intakeFormData() {
@@ -41,12 +36,10 @@ function intakeFormData() {
    // break out of form if incomplete
    if ((title == '') || (author == '') || (pages == '')) {
       return;
+   } else {
+      addBookToLibrary(title, author, pages, read);
+      document.getElementById('addBookForm').reset();
    }
-   
-   // call function to input book data to array
-   addBookToLibrary(title, author, pages, read);
-
-   closeAddBookModal();
 }
 
 // adds new books to array
@@ -65,7 +58,7 @@ function displayBooks() {
    const booksGrid = document.querySelector('.booksGrid');
 
    // remove previously displayed cards that were popping up before looping array again
-   const removeDivs = document.querySelectorAll('.card'); // removeDivs could be used as a book counter later
+   const removeDivs = document.querySelectorAll('.card');
    for (let i = 0; i < removeDivs.length; i++) {
       removeDivs[i].remove();
    }
@@ -124,9 +117,8 @@ function displayBooks() {
    index++;
    })
    updateBookCounter.textContent = `Books: ${index}`;
+   closeAddBookModal();
 }
 
 addNewBookBtn.onclick = openAddBookModal;
 overlay.onclick = closeAddBookModal;
-
-addBookToLibrary('the hobb', 'jrr tolk', '200', 'yes');
