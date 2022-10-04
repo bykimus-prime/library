@@ -28,6 +28,7 @@ const openAddBookModal = () => {
 const closeAddBookModal = () => {
    addBookModal.classList.remove('active');
    overlay.classList.remove('active');
+   resetForm();
 }
 
 function intakeFormData() {
@@ -45,7 +46,6 @@ function intakeFormData() {
    addBookToLibrary(title, author, pages, read);
 
    closeAddBookModal();
-   resetForm();
 }
 
 // adds new books to array
