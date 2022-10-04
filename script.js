@@ -13,6 +13,7 @@ const addBookBtn = document.querySelector('.add-to-lib-btn');
 const addNewBookBtn = document.querySelector('.add-new-book-btn');
 const addBookModal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
+const updateBookCounter = document.querySelector('.book-counter');
 
 addBookBtn.addEventListener('click', intakeFormData);
 
@@ -122,6 +123,7 @@ function displayBooks() {
 
    index++;
    })
+   updateBookCounter.textContent = `Books: ${index}`;
 }
 
 addNewBookBtn.onclick = openAddBookModal;
