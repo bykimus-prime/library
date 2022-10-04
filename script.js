@@ -10,13 +10,11 @@ function Book(title, author, pages, read) {
 }
 
 const addBookBtn = document.querySelector('.add-to-lib-btn');
-const resetBtn = document.querySelector('.reset-btn');
 const addNewBookBtn = document.querySelector('.add-new-book-btn');
 const addBookModal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 
 addBookBtn.addEventListener('click', intakeFormData);
-resetBtn.addEventListener('click', resetForm);
 
 function resetForm() {
    document.getElementById('addBookForm').reset();
