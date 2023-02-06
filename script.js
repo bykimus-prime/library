@@ -1,5 +1,12 @@
 // declare empty array for library
-let myLibrary = [];
+let myLibrary = [
+   {
+      title: 'The Hobbit, or There and Back Again',
+      author: 'J.R.R. Tolkien',
+      pages: 310,
+      read: true,
+   },
+];
 
 // object constructor
 function Book(title, author, pages, read) {
@@ -9,13 +16,17 @@ function Book(title, author, pages, read) {
    this.read = read;
 }
 
+const addBookForm = document.querySelector('#addBookForm');
+const title = document.querySelector('#bookFormTitle');
+const author = document.querySelector('#bookFormAuthor');
+const pages = document.querySelector('#bookFormPages');
+const read = document.querySelector('#bookFormRead');
+const booksGrid = document.querySelector('.books-grid');
 const addBookBtn = document.querySelector('.add-to-lib-btn');
 const addNewBookBtn = document.querySelector('.add-new-book-btn');
 const addBookModal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const updateBookCounter = document.querySelector('.book-counter');
-
-addBookBtn.addEventListener('click', intakeFormData);
 
 const openAddBookModal = () => {
    addBookModal.classList.add('active');
@@ -27,98 +38,112 @@ const closeAddBookModal = () => {
    overlay.classList.remove('active');
 }
 
-function intakeFormData() {
-   let title = document.getElementById('title').value; // .value will pull the contents of textbox
-   let author = document.getElementById('author').value;
-   let pages = document.getElementById('pages').value;
-   let read = document.getElementById('read').value;
-
-   // break out of form if incomplete
-   if ((title == '') || (author == '') || (pages == '')) {
-      return;
-   } else {
-      addBookToLibrary(title, author, pages, read);
-      document.getElementById('addBookForm').reset();
-   }
-}
-
-// adds new books to array
-function addBookToLibrary(title, author, pages, read) {
-   let newBook = new Book(title, author, pages, read);
-   myLibrary.push(newBook);
-   displayBooks();
-}
-
-function capitalizeFirstLetter(string) {
-   return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-// displays library array to cards
-function displayBooks() {
-   const booksGrid = document.querySelector('.booksGrid');
-
-   // remove previously displayed cards that were popping up before looping array again
-   const removeDivs = document.querySelectorAll('.card');
-   for (let i = 0; i < removeDivs.length; i++) {
-      removeDivs[i].remove();
-   }
-
-   // loop over library array and display to cards
-   let index = 0;
-   myLibrary.forEach(myLibraries => {
-      const card = document.createElement('div');
-      card.classList.add('card')
-      booksGrid.appendChild(card);
-
-      const rmvBookBtn = document.createElement('button');
-      const isReadBtn = document.createElement('button');
-      rmvBookBtn.classList.add('remove-book-btn');
-      isReadBtn.classList.add('is-read-btn');
-      rmvBookBtn.textContent = 'Remove From Library';
-      isReadBtn.textContent = 'Read Status';
-
-      // link data attribute to each button to the array and card
-      rmvBookBtn.dataset.linkedArray = index;
-      isReadBtn.dataset.linkedArray = index;
-      card.appendChild(rmvBookBtn);
-      card.appendChild(isReadBtn);
-
-      rmvBookBtn.addEventListener('click', removeBookFromLibrary);
-      isReadBtn.addEventListener('click', isReadToggle);
-
-      function removeBookFromLibrary() {
-         let getBookToRemove = rmvBookBtn.dataset.linkedArray;
-         myLibrary.splice(parseInt(getBookToRemove), 1);
-         card.remove();
-         displayBooks();
-      }
-
-      function isReadToggle() {
-         let getBookToggle = isReadBtn.dataset.linkedArray;
-         Book.prototype = Object.create(Book.prototype);
-         const bookToggle = new Book();
-
-         if ((myLibrary[parseInt(getBookToggle)].read) == 'yes') {
-            bookToggle.read = 'no';
-            myLibrary[parseInt(getBookToggle)].read = bookToggle.read;
-         } else if ((myLibrary[parseInt(getBookToggle)].read == 'no')) {
-            bookToggle.read = 'yes';
-            myLibrary[parseInt(getBookToggle)].read = bookToggle.read;
-         }
-         displayBooks();
-      }
-
-      for (let key in myLibraries) {
-         const para = document.createElement('p');
-         para.textContent = capitalizeFirstLetter((`${key}: ${myLibraries[key]}`));
-         card.appendChild(para);
-      }
-
-   index++;
-   })
-   updateBookCounter.textContent = `Books: ${index}`;
-   closeAddBookModal();
-}
-
 addNewBookBtn.onclick = openAddBookModal;
 overlay.onclick = closeAddBookModal;
+
+// update books in array
+Book.prototype.updateBook = function (index, value) {
+   myLibrary[index].read = value;
+};
+
+// add books to library array
+addBookForm.addEventListener('submit', (e) => {
+   closeAddBookModal();
+   e.preventDefault();
+   // break out of form if incomplete
+   // if ((title == '') || (author == '') || (pages == '')) {
+   //    return;
+   // } else {
+   //    addBookToLibrary(title, author, pages, read);
+   //    document.getElementById('addBookForm').reset();
+   // }
+   const book = new Book(title.value, author.value, pages.value, read.value);
+   myLibrary.push(book);
+   formClear();
+   displayBooks();
+   // left off here. not displaying new books as read=true
+});
+
+function removeBook() {
+   const rmvBookBtn = document.querySelectorAll('.remove-book-btn');
+   rmvBookBtn.forEach((btn) => {
+      btn.addEventListener('click', () => {
+         myLibrary.splice(btn.getAttribute('data'), 1);
+         displayBooks();
+      });
+   });
+}
+
+function displayBooks() {
+   booksGrid.textContent = '';
+   myLibrary.forEach((book, index) => {
+      createBookCard(book, index);
+   });
+   removeBook();
+   updateBookCounter.textContent = `Books: ${myLibrary.length}`;
+}
+
+// clear form inputs
+function formClear() {
+   title.value = '';
+   author.value = '';
+   pages.value = '';
+   read.value = true;
+}
+
+// create book cards on the page
+function createBookCard(book, index) {
+   // create card div
+   const card = document.createElement('div');
+   card.classList.add('card')
+
+   // add book info to cards
+   const cardTitle = document.createElement('p');
+   cardTitle.classList.add('card-title');
+   cardTitle.innerText = `Title: ${book.title}`;
+   card.append(cardTitle);
+
+   const cardAuthor = document.createElement('p');
+   cardAuthor.classList.add('card-author');
+   cardAuthor.innerText = `Author: ${book.author}`;
+   card.append(cardAuthor);
+
+   const cardPages = document.createElement('p');
+   cardPages.classList.add('card-pages');
+   cardPages.innerText = `${book.pages} pages`;
+   card.append(cardPages);
+
+   const readStatus = document.createElement('p');
+   readStatus.classList.add('card-read-status');
+   // change read status innertext if true/false
+   if (book.read === true) {
+      readStatus.innerText = 'Read: Yes';
+   } else {
+      readStatus.innerText = 'Read: No';
+   }
+   card.append(readStatus)
+
+   // add remove button to card
+   const rmvBookBtn = document.createElement('button');
+   rmvBookBtn.setAttribute('data', index);
+   rmvBookBtn.classList.add('remove-book-btn');
+   rmvBookBtn.textContent = 'Remove From Library';
+   card.appendChild(rmvBookBtn);
+
+   // add read status button to card
+   const isReadBtn = document.createElement('button');
+   isReadBtn.setAttribute('data', index);
+   isReadBtn.classList.add('is-read-btn');
+   isReadBtn.textContent = 'Read Status';
+   card.appendChild(isReadBtn);
+   // change read status with click listener
+   isReadBtn.addEventListener('click', () => {
+      book.read = !book.read;
+      displayBooks();
+   })
+
+   // finally add book to book grid
+   booksGrid.append(card);
+}
+
+displayBooks();
