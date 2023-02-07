@@ -1,12 +1,5 @@
 // declare empty array for library
-let myLibrary = [
-   {
-      title: 'The Hobbit, or There and Back Again',
-      author: 'J.R.R. Tolkien',
-      pages: 310,
-      read: true,
-   },
-];
+let myLibrary = [];
 
 // object constructor
 function Book(title, author, pages, read) {
@@ -41,25 +34,13 @@ const closeAddBookModal = () => {
 addNewBookBtn.onclick = openAddBookModal;
 overlay.onclick = closeAddBookModal;
 
-// update books in array
-// Book.prototype.updateBook = function (index, value) {
-//    myLibrary[index].read = value;
-// };
-
 // add books to library array
 addBookForm.addEventListener('submit', (e) => {
    closeAddBookModal();
    e.preventDefault();
-   // break out of form if incomplete
-   // if ((title == '') || (author == '') || (pages == '')) {
-   //    return;
-   // } else {
-   //    addBookToLibrary(title, author, pages, read);
-   //    document.getElementById('addBookForm').reset();
-   // }
    const book = new Book(title.value, author.value, parseInt(pages.value), forceBool(read.value));
    myLibrary.push(book);
-   formClear();
+   document.getElementById('addBookForm').reset(); // reset form
    displayBooks();
 });
 
@@ -80,19 +61,12 @@ function displayBooks() {
    });
    removeBook();
    updateBookCounter.textContent = `Books: ${myLibrary.length}`;
-   console.log(myLibrary);
-}
-
-// clear form inputs
-function formClear() {
-   title.value = '';
-   author.value = '';
-   pages.value = '';
-   read.value = '';
 }
 
 function forceBool(string) {
-   if (typeof string === "boolean") return string;
+   if (typeof string === "boolean") {
+      return string;
+   }
    switch (string.toLowerCase()) {
       case "true": return true;
       case "false": return false;
@@ -130,7 +104,7 @@ function createBookCard(book, index) {
    } else {
       readStatus.innerText = 'Read: No';
    }
-   card.append(readStatus)
+   card.append(readStatus);
 
    // add remove button to card
    const rmvBookBtn = document.createElement('button');

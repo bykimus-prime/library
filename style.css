@@ -76,10 +76,6 @@
    padding-left: 2px;
 }
 
-input:invalid {
-   border: 1px solid lightcoral;
-}
-
 .form-row select {
    margin-left: 15px;
    width: 60px;
@@ -99,6 +95,11 @@ input:invalid {
    border-radius: 10px;
    cursor: pointer;
    font-weight: bold;
+}
+
+form:invalid button {
+   opacity: 0.3;
+   pointer-events: none;
 }
 
 .add-to-lib-btn:hover {
