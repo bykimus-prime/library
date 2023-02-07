@@ -42,9 +42,9 @@ addNewBookBtn.onclick = openAddBookModal;
 overlay.onclick = closeAddBookModal;
 
 // update books in array
-Book.prototype.updateBook = function (index, value) {
-   myLibrary[index].read = value;
-};
+// Book.prototype.updateBook = function (index, value) {
+//    myLibrary[index].read = value;
+// };
 
 // add books to library array
 addBookForm.addEventListener('submit', (e) => {
@@ -57,11 +57,10 @@ addBookForm.addEventListener('submit', (e) => {
    //    addBookToLibrary(title, author, pages, read);
    //    document.getElementById('addBookForm').reset();
    // }
-   const book = new Book(title.value, author.value, pages.value, read.value);
+   const book = new Book(title.value, author.value, parseInt(pages.value), forceBool(read.value));
    myLibrary.push(book);
    formClear();
    displayBooks();
-   // left off here. not displaying new books as read=true
 });
 
 function removeBook() {
@@ -81,6 +80,7 @@ function displayBooks() {
    });
    removeBook();
    updateBookCounter.textContent = `Books: ${myLibrary.length}`;
+   console.log(myLibrary);
 }
 
 // clear form inputs
@@ -88,7 +88,16 @@ function formClear() {
    title.value = '';
    author.value = '';
    pages.value = '';
-   read.value = true;
+   read.value = '';
+}
+
+function forceBool(string) {
+   if (typeof string === "boolean") return string;
+   switch (string.toLowerCase()) {
+      case "true": return true;
+      case "false": return false;
+      default: return false;
+   }
 }
 
 // create book cards on the page
